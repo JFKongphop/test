@@ -3,7 +3,7 @@ package main
 import (
 	"context"
 	"fmt"
-	// "log"
+	"log"
 	"net/http"
 	"os"
 	"time"
@@ -12,8 +12,8 @@ import (
 	// "github.com/joho/godotenv"
 	"github.com/labstack/echo"
 	"github.com/labstack/echo/middleware"
-	// "gorm.io/driver/mysql"
-	// "gorm.io/gorm"
+	"gorm.io/driver/mysql"
+	"gorm.io/gorm"
 )
 
 type User struct {
@@ -25,7 +25,8 @@ type User struct {
 	RegisterDate time.Time `gorm:"column:registerDate;autoCreateTime" json:"registerDate"`
 }
 
-// var db *gorm.DB
+var db *gorm.DB
+var err error
 
 func main() {
 	e := echo.New()
@@ -93,21 +94,21 @@ func init() {
 	// 	log.Fatal("Error loading .env file")
 	// }
 
-	// dataSourceName := fmt.Sprintf(
-	// 	"%v:%v@tcp(%v:%v)/%v?charset=utf8mb4&parseTime=True&loc=Local",
-	// 	os.Getenv("RW_USERNAME"),
-	// 	os.Getenv("RW_PASSWORD"),
-	// 	os.Getenv("RW_HOST"),
-	// 	os.Getenv("RW_PORT"),
-	// 	os.Getenv("RW_DATABASE"),
-	// )
+	dataSourceName := fmt.Sprintf(
+		"%v:%v@tcp(%v:%v)/%v?charset=utf8mb4&parseTime=True&loc=Local",
+		os.Getenv("RW_USERNAME"),
+		os.Getenv("RW_PASSWORD"),
+		os.Getenv("RW_HOST"),
+		os.Getenv("RW_PORT"),
+		os.Getenv("RW_DATABASE"),
+	)
 
-	// dial := mysql.Open(dataSourceName)
-	// db, err = gorm.Open(dial, &gorm.Config{
-	// 	DryRun: false,
-	// })
+	dial := mysql.Open(dataSourceName)
+	db, err = gorm.Open(dial, &gorm.Config{
+		DryRun: false,
+	})
 
-	// if err != nil {
-	// 	log.Fatal("connect error", err)
-	// }
+	if err != nil {
+		log.Fatal("connect error", err)
+	}
 }
