@@ -12,8 +12,8 @@ import (
 	"github.com/joho/godotenv"
 	"github.com/labstack/echo"
 	"github.com/labstack/echo/middleware"
-	"gorm.io/driver/mysql"
-	"gorm.io/gorm"
+	// "gorm.io/driver/mysql"
+	// "gorm.io/gorm"
 )
 
 type User struct {
@@ -25,7 +25,7 @@ type User struct {
 	RegisterDate time.Time `gorm:"column:registerDate;autoCreateTime" json:"registerDate"`
 }
 
-var db *gorm.DB
+// var db *gorm.DB
 
 func main() {
 	e := echo.New()
@@ -61,17 +61,17 @@ func main() {
 		return c.JSON(http.StatusOK, response)
 	})
 
-	e.GET("/test/:userId", func(c echo.Context) error {
-		userId := c.Param("userId")
-		fmt.Println(userId)
+	// e.GET("/test/:userId", func(c echo.Context) error {
+	// 	userId := c.Param("userId")
+	// 	fmt.Println(userId)
 
-		var user User
-		if err := db.Select("username", "firstname", "lastname").Where("userId = ?", userId).First(&user).Error; err != nil {
-			return c.JSON(http.StatusBadRequest, err.Error())
-		}
+	// 	var user User
+	// 	if err := db.Select("username", "firstname", "lastname").Where("userId = ?", userId).First(&user).Error; err != nil {
+	// 		return c.JSON(http.StatusBadRequest, err.Error())
+	// 	}
 
-		return c.JSON(http.StatusOK, user)
-	})
+	// 	return c.JSON(http.StatusOK, user)
+	// })
 
 	e.Start(":1111")
 }
@@ -82,21 +82,21 @@ func init() {
 		log.Fatal("Error loading .env file")
 	}
 
-	dataSourceName := fmt.Sprintf(
-		"%v:%v@tcp(%v:%v)/%v?charset=utf8mb4&parseTime=True&loc=Local",
-		os.Getenv("RW_USERNAME"),
-		os.Getenv("RW_PASSWORD"),
-		os.Getenv("RW_HOST"),
-		os.Getenv("RW_PORT"),
-		os.Getenv("RW_DATABASE"),
-	)
+	// dataSourceName := fmt.Sprintf(
+	// 	"%v:%v@tcp(%v:%v)/%v?charset=utf8mb4&parseTime=True&loc=Local",
+	// 	os.Getenv("RW_USERNAME"),
+	// 	os.Getenv("RW_PASSWORD"),
+	// 	os.Getenv("RW_HOST"),
+	// 	os.Getenv("RW_PORT"),
+	// 	os.Getenv("RW_DATABASE"),
+	// )
 
-	dial := mysql.Open(dataSourceName)
-	db, err = gorm.Open(dial, &gorm.Config{
-		DryRun: false,
-	})
+	// dial := mysql.Open(dataSourceName)
+	// db, err = gorm.Open(dial, &gorm.Config{
+	// 	DryRun: false,
+	// })
 
-	if err != nil {
-		log.Fatal("connect error", err)
-	}
+	// if err != nil {
+	// 	log.Fatal("connect error", err)
+	// }
 }
