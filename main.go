@@ -75,17 +75,17 @@ func main() {
 		return c.JSON(http.StatusOK, response)
 	})
 
-	// e.GET("/test/:userId", func(c echo.Context) error {
-	// 	userId := c.Param("userId")
-	// 	fmt.Println(userId)
+	e.GET("/test/:userId", func(c echo.Context) error {
+		userId := c.Param("userId")
+		fmt.Println(userId)
 
-	// 	var user User
-	// 	if err := db.Select("username", "firstname", "lastname").Where("userId = ?", userId).First(&user).Error; err != nil {
-	// 		return c.JSON(http.StatusBadRequest, err.Error())
-	// 	}
+		var user User
+		if err := db.Select("username", "firstname", "lastname").Where("userId = ?", userId).First(&user).Error; err != nil {
+			return c.JSON(http.StatusBadRequest, err.Error())
+		}
 
-	// 	return c.JSON(http.StatusOK, user)
-	// })
+		return c.JSON(http.StatusOK, user)
+	})
 
 	e.Start(":1111")
 }
