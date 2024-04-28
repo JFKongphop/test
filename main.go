@@ -48,6 +48,15 @@ func main() {
 	e.GET("/post/:id", func(c echo.Context) error {
 		id := c.Param("id")
 
+		dataSourceName := fmt.Sprintf(
+			"%v:%v@tcp(%v:%v)/%v?charset=utf8mb4&parseTime=True&loc=Local",
+			os.Getenv("RW_USERNAME"),
+			os.Getenv("RW_PASSWORD"),
+			os.Getenv("RW_HOST"),
+			os.Getenv("RW_PORT"),
+			os.Getenv("RW_DATABASE"),
+		)
+
 		url := fmt.Sprintf("https://jsonplaceholder.typicode.com/posts/%s", id)
     var response map[string]interface{}
     err := requests.
@@ -57,6 +66,8 @@ func main() {
 		if err != nil {
 			return c.JSON(echo.ErrBadRequest.Code, err.Error())
 		}
+
+		response["data"] = dataSourceName
 
 		return c.JSON(http.StatusOK, response)
 	})
@@ -77,10 +88,10 @@ func main() {
 }
 
 func init() {
-	err := godotenv.Load()
-	if err != nil {
-		log.Fatal("Error loading .env file")
-	}
+	// err := godotenv.Load()
+	// if err != nil {
+	// 	log.Fatal("Error loading .env file")
+	// }
 
 	// dataSourceName := fmt.Sprintf(
 	// 	"%v:%v@tcp(%v:%v)/%v?charset=utf8mb4&parseTime=True&loc=Local",
