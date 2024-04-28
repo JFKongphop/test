@@ -3,7 +3,7 @@ FROM golang:1.21-alpine AS builder
 WORKDIR /app
 
 COPY . .
-# COPY .env .
+COPY .env .
 
 RUN CGO_ENABLED=0 go build -ldflags="-s -w" -o myapp .
 
@@ -12,7 +12,7 @@ FROM alpine:latest
 WORKDIR /app
 
 COPY --from=builder /app/myapp .
-# COPY --from=builder /app/.env . 
+COPY --from=builder /app/.env . 
 
 EXPOSE 8080
 

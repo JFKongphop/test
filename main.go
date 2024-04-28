@@ -3,7 +3,7 @@ package main
 import (
 	"context"
 	"fmt"
-	"log"
+	
 	"net/http"
 	"os"
 	"time"
@@ -12,6 +12,8 @@ import (
 	// "github.com/joho/godotenv"
 	"github.com/labstack/echo"
 	"github.com/labstack/echo/middleware"
+
+	"log"
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
 )
