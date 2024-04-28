@@ -3,13 +3,13 @@ package main
 import (
 	"context"
 	"fmt"
-	"log"
+	// "log"
 	"net/http"
 	"os"
 	"time"
 
 	"github.com/carlmjohnson/requests"
-	"github.com/joho/godotenv"
+	// "github.com/joho/godotenv"
 	"github.com/labstack/echo"
 	"github.com/labstack/echo/middleware"
 	// "gorm.io/driver/mysql"
