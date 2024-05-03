@@ -48,6 +48,12 @@ func main() {
 		})
 	})
 
+	e.GET("/wwww", func(c echo.Context) error {
+		return c.JSON(http.StatusOK, map[string]interface{}{
+			"aaaaa": os.Getenv("WORD"),
+		})
+	})
+
 	e.GET("/post/:id", func(c echo.Context) error {
 		id := c.Param("id")
 
